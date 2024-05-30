@@ -8,7 +8,7 @@ This repository contains code that reads a CSV file containing user activity log
 Open a terminal or command prompt and navigate to the directory containing the python script.
 
 2. **Update input csv file name in code**:
-Change the input file name on line 71 in script.py to reflect the name of your input file name.
+Change the input file name on line 71 in script.py to reflect the name of your input file.
 
 2.  **Run the Script**:
 ```bash
@@ -33,4 +33,4 @@ The write_json function saves the aggregated data to a JSON file.
 This script ensures efficient memory usage by processing each CSV row incrementally and only keeping necessary aggregated data in memory.
 
 ### Assumptions:
-This program is written for the input csv file having columns - User ID,TimeStamp,Activity,Count,IP Address,Random String
+This program is written for the input csv file having columns - User ID, TimeStamp, Activity, Count, IP Address, Random String
