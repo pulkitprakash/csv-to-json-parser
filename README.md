@@ -11,7 +11,7 @@ Clone the repository or download the files to your local machine.
 Open a terminal or command prompt and navigate to the directory containing the python script.
 
 3. **Update input csv file name in code**:
-Change the input file name on line 71 in script.py to reflect the name of your input file which should be there in the current directory.
+Change the input file name on line 71 in script.py to reflect the name of your input file which should be present in the current directory.
 
 4.  **Run the Script**:
 ```bash
