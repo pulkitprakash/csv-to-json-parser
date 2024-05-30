@@ -7,12 +7,20 @@ def process_csv_row(row, output_data, seen_records):
     """
     Processes a single row of CSV data and updates the aggregated data.
     """
-    # check for valid row values
+    valid_row = True
+    # Ensure valid timestamp format
+    try:
+        row['TimeStamp'] = datetime.strptime(row['TimeStamp'], '%Y-%m-%d %H:%M:%S')
+    except (ValueError, TypeError):
+        valid_row = False
+
+    # check for other valid row values
     valid_row = True if (row['User ID'] and row['Random String'] and row['Activity'] and row['Count'] and row['Count'].isdigit() and row['IP Address']) else False
+
     if not valid_row:
         print(f"Invalid format for row: {row}")
         return
-    
+
     user_id = row['User ID']
     random_string = row['Random String']
     
@@ -37,14 +45,7 @@ def read_and_aggregate_csv(file_path):
     try:
         with open(file_path, mode='r', newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
-            for row in reader:
-                # Ensure valid timestamp format
-                try:
-                    row['TimeStamp'] = datetime.strptime(row['TimeStamp'], '%Y-%m-%d %H:%M:%S')
-                except (ValueError, TypeError):
-                    print(f"Invalid date format for row: {row}")
-                    continue
-                
+            for row in reader:                
                 process_csv_row(row, output_data, seen_records)
     except FileNotFoundError:
         print(f"File {file_path} not found.")
