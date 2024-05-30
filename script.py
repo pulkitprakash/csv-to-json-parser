@@ -69,7 +69,7 @@ def write_json(data, file_path):
 
 def main():
     input_file = 'input_data.csv'                  # input file name; should be there in the same directory as of script.py
-    output_file = 'output_data.json'      # output file name; saves in the same directory as of script.py
+    output_file = 'aggregated_activities.json'      # output file name; saves in the same directory as of script.py
     
     output_data = read_and_aggregate_csv(input_file)
     if not output_data:
