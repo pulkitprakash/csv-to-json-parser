@@ -1,0 +1,83 @@
+import csv
+import json
+from collections import defaultdict
+from datetime import datetime
+
+def process_csv_row(row, aggregated_data, seen_records):
+    """
+    Processes a single row of CSV data and updates the aggregated data.
+    """
+    # check for valid row values
+    valid_row = True if (row['User ID'] and row['Random String'] and row['Activity'] and row['Count'] and row['Count'].isdigit() and row['IP Address']) else False
+    if not valid_row:
+        print(f"Invalid format for row: {row}")
+        return
+    
+    user_id = row['User ID']
+    random_string = row['Random String']
+    
+    # Skip duplicate records
+    if random_string in seen_records:
+        return
+    
+    seen_records.add(random_string)
+    
+    aggregated_data[user_id]['activities'].append(row['Activity'])
+    aggregated_data[user_id]['total_count'] += int(row['Count'])
+    aggregated_data[user_id]['timestamps'].append(row['TimeStamp'].strftime('%Y-%m-%d %H:%M:%S'))
+    aggregated_data[user_id]['ip_addresses'].add(row['IP Address'])
+
+def read_and_aggregate_csv(file_path):
+    """
+    Reads the CSV file and aggregates data by User ID.
+    """
+    aggregated_data = defaultdict(lambda: {'activities': [], 'total_count': 0, 'timestamps': [], 'ip_addresses': set()})
+    seen_records = set()
+
+    try:
+        with open(file_path, mode='r', newline='', encoding='utf-8') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                # Ensure valid timestamp format
+                try:
+                    row['TimeStamp'] = datetime.strptime(row['TimeStamp'], '%Y-%m-%d %H:%M:%S')
+                except (ValueError, TypeError):
+                    print(f"Invalid date format for row: {row}")
+                    continue
+                
+                process_csv_row(row, aggregated_data, seen_records)
+    except FileNotFoundError:
+        print(f"File {file_path} not found.")
+    except Exception as e:
+        print(f"An error occurred while reading the CSV file: {e}")
+
+    # Convert sets to lists for JSON serialization
+    for user_id in aggregated_data:
+        aggregated_data[user_id]['ip_addresses'] = list(aggregated_data[user_id]['ip_addresses'])
+    
+    return aggregated_data
+
+def write_json(data, file_path):
+    """
+    Writes the aggregated data to a JSON file.
+    """
+    try:
+        with open(file_path, mode='w', encoding='utf-8') as jsonfile:
+            json.dump(data, jsonfile, indent=4)
+    except Exception as e:
+        print(f"An error occurred while writing the JSON file: {e}")
+
+def main():
+    input_file = 'Exampledata.csv'                  # input file name; should be there in the same directory as of script.py
+    output_file = 'aggregated_activities.json'      # output file name; saves in the same directory as of script.py
+    
+    aggregated_data = read_and_aggregate_csv(input_file)
+    if not aggregated_data:
+        print("No valid data to process.")
+        return
+    
+    write_json(aggregated_data, output_file)
+    print(f"Aggregated data has been written to {output_file}")
+
+if __name__ == "__main__":
+    main()
