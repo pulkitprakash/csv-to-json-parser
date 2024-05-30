@@ -68,7 +68,7 @@ def write_json(data, file_path):
         print(f"An error occurred while writing the JSON file: {e}")
 
 def main():
-    input_file = 'input_data.csv'                  # input file name; should be there in the same directory as of script.py
+    input_file = 'user_activities.csv'                  # input file name; should be there in the same directory as of script.py
     output_file = 'aggregated_activities.json'      # output file name; saves in the same directory as of script.py
     
     output_data = read_and_aggregate_csv(input_file)
