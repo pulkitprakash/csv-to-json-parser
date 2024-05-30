@@ -1,4 +1,4 @@
-# User Activity Aggregator
+# CSV to JSON Parser
 
 This repository contains code that reads a CSV file containing user activity logs, aggregates the data by user ID, and outputs the results in a JSON format.
 
