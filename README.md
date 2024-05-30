@@ -4,13 +4,16 @@ This repository contains code that reads a CSV file containing user activity log
 
 ### How to Run the Script
 
-1.  **Navigate to the Script Directory**:
+1. **Clone the Repository**:
+Clone the repository or download the files to your local machine.
+
+2.  **Navigate to the Script Directory**:
 Open a terminal or command prompt and navigate to the directory containing the python script.
 
-2. **Update input csv file name in code**:
+3. **Update input csv file name in code**:
 Change the input file name on line 71 in script.py to reflect the name of your input file which should be there in the current directory.
 
-2.  **Run the Script**:
+4.  **Run the Script**:
 ```bash
 python script.py
 ```
