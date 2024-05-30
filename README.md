@@ -30,4 +30,4 @@ The write_json function saves the aggregated data to a JSON file.
 This script ensures efficient memory usage by processing each CSV row incrementally and only keeping necessary aggregated data in memory.
 
 ### Assumptions:
-This program is written for the input csv file having columns - User ID,TimeStamp,Activity,Count,IP Address,Random String
+This program is written to process the input csv file having columns - User ID,TimeStamp,Activity,Count,IP Address,Random String
